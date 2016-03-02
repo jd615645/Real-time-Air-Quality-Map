@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="icon.ico" rel="SHORTCUT ICON">
+	<title>零時空汙觀測網</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CSS/style.css">
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBs9C2vEzW4DVOFNwtSwjD_3jOmLjc6UYY&sensor=true"></script>
+	<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js"></script>
+    <script type="text/javascript" src="//thingspeak.com/highcharts-3.0.8.js"></script>
+    <script type="text/javascript" src="//thingspeak.com/exporting.js"></script>
+	<script type="text/javascript" src = 'JavaScript/Map_main.js'></script>
+</head>
+<body onload="initialize()">
+	<div class='row col-xs-12'>
+		<div class='col-md-10 col-md-offset-1'>
+			<img src="Pic/icons/g0v.png" height='75px' id="titlepic" onclick="location.href='/map.html'">
+		</div>
+	</div>
+	<div class='row col-xs-12'>
+		<div class='col-xs-12 col-xs-offset-0 col-md-10 col-md-offset-1'>
+			<div id="dis" class="row">
+				<div id='picbardiv' hidden="true" width='700px' style="z-index: 2; height: 40px;">
+					<h4 style="z-index: 2">圖層&nbsp
+						<button class='btn btn-default btn-sm' onclick="applyShowOptions({showType:'dust2_5'});">PM2.5&nbsp(環保署分級)</button>
+						<button class='btn btn-default btn-sm' onclick="applyShowOptions({showType:'dust2_5_NASA'});">PM2.5&nbsp(NASA分級)</button>
+						<button class='btn btn-default btn-sm' onclick="applyShowOptions({showType:'temp'});">氣溫</button>
+						<button class='btn btn-default btn-sm' onclick="applyShowOptions({showType:'humi'});">濕度</button>
+						<button class='btn btn-info btn-sm' data-toggle="modal" data-target="#FilterModal">條件篩選</button>
+						<button id="livebtn" style="margin-right: 20px" class="btn btn-danger btn-sm" onclick = "shutlive();">停止即時更新</button>
+					</h4>
+					<div class="row" style="z-index: 2">
+						<div class="col-md-12" id='picbar' style="height: 30px"></div>
+					</div>
+				</div>
+				<div id='info_console_div' width='100px' height='20px' hidden="true"></div>
+				<div id="map" class="col-xs-12 center-block">載入中</div>
+				<div id="footer" class="col-xs-12 center-block" style="margin-top: 10px">
+					<p class="text-center">本觀測網僅彙整公開資料提供視覺化參考，並不對資料數據提供保證，實際測值以各資料來源為準。</p>
+					<p class="text-center">本網站由ProbeCube專案小組技術提供，原始碼公開於<a href="https://github.com/immortalmice/ThingSpeak-Visual-Map">Github-immortalmice</a>。</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="FilterModal" tabindex="-1" role="dialog" aria-labelledby="FilterModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        		<h4 class="modal-title" id="FilterModalLabel">條件篩選</h4>
+	      		</div>
+	      		<div class="modal-body">
+	      			<form id="filterset" role="form">
+	      				<div class="form-group">
+		      				<label>你想顯示來自那些類型的測站？</label>
+		      				<div style="margin-left: 20px">
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='PC' type='checkbox' checked>ProbeCube
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='LA' type='checkbox' checked>LASS
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='EPA' type='checkbox' checked>EPA(環保署)
+							    	</label>
+							  	</div>
+							  	<div class="checkbox">
+							    	<label>
+							    		<input id='Pilot' type='checkbox' checked>Pilot
+							    	</label>
+							  	</div>
+							</div>
+						</div>
+					  	<div class="form-group">
+					    	<label for="timeRange">最近更新</label>
+					    	<select id="timeRange" class="form-control">
+							  	<option value='600000'>十分鐘內</option>
+							  	<option value='1800000'>三十分鐘內</option>
+							  	<option value='3600000'>一個小時內</option>
+							  	<option value='14400000' selected>四個小時內</option>
+							  	<option value='43200000'>十二小時內</option>
+							  	<option value='86400000'>一天內</option>
+							  	<option value='2592000000'>一個月內</option>
+							  	<option value='-1'>全部</option>
+							</select>
+					  	</div>
+					  	<button type="submit" class="btn btn-default">送出</button>
+					</form>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+	<div class="modal fade" id="RawDataModal" tabindex="-1" role="dialog" aria-labelledby="RawDataModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        		<h4 class="modal-title" id="RawDataModalLabel">原始資料</h4>
+	      		</div>
+	      		<div class="modal-body">
+	      			<table id="RawDataTable" class="table table-striped table_bordered table_hover table-condensed">
+	      			</table>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+	<p id="order_channel" hidden="true">ORDER_CHANNEL</p>
+</body>
+</html>

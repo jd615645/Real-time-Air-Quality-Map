@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="icon.ico" rel="SHORTCUT ICON">
+	<title>ProbePot</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../CSS/style.css">
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="../JavaScript/History_main.js"></script>
+</head>
+<body>
+	<div class='row col-xs-12'>
+		<div class='col-sm-10 col-sm-offset-1'>
+			<img src="../Pic/icons/g0v.png" height='50px' id="titlepic" onclick="location.href='../map.html'">
+		</div>
+	</div>
+	<div class='row col-xs-12'>
+		<div class='col-sm-10 col-sm-offset-1'>
+			<div id = "cont">
+				<div class='col-xs-12 his-field'>
+					<h1 class='inline' id = "chname"></h1>
+					<div class="pull-right inline">
+						<button id="typeswitch" class='btn btn-info btn-sm' onclick="show_switch(1)">表格模式</button>
+						<button id="map-btn" class='btn btn-default btn-sm' onclick="location.href='/map.html'">返回地圖</button>
+					</div>
+				</div>
+				<p class = "hide" id = "theid">CHID</p>
+				<p class = "hide" id = "thety">_TYPE</p>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="fieldModal" tabindex="-1" role="dialog" aria-labelledby="fieldModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        		<h4 class="modal-title" id="fieldModalLabel">修改參數</h4>
+	      		</div>
+	      		<div class="modal-body">
+	      			<form id="fieldset" role="form">
+					  	<div class="form-group">
+					    	<label for="day">天數&nbsp;<small>(預設：7)</small></label>
+					    	<input type="number" class="form-control" id="day" placeholder="幾天內的資料？">
+					  	</div>
+					  	<div class="form-group">
+					    	<label for="averge">平均</label>
+					    	<select id="averge" class="form-control">
+							  	<option>10</option>
+							  	<option>15</option>
+							  	<option>20</option>
+							  	<option>30</option>
+							  	<option>60</option>
+							  	<option>240</option>
+							  	<option>720</option>
+							  	<option>1440</option>
+							  	<option>daily</option>
+							</select>
+					  	</div>
+					  	<button type="submit" class="btn btn-default">送出</button>
+					</form>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+	<div class="modal fade" id="tableModal" tabindex="-1" role="dialog" aria-labelledby="tableModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        		<h4 class="modal-title" id="tableModalLabel">修改參數</h4>
+	      		</div>
+	      		<div class="modal-body">
+	      			<form id="tableset" role="form">
+	      				<div class="form-group">
+					    	<label for="method">取樣方式</label>
+					    	<select id="method" class="form-control">
+							  	<option>資料數量</option>
+							  	<option>天數</option>
+							  	<option>日期區間（UTC）</option>
+							</select>
+					  	</div>
+					  	<div id="resultdiv" class="form-group tm">
+					    	<label for="result">資料數量</label>
+					    	<input type="number" class="form-control" id="result" placeholder="最近幾筆資料？">
+					  	</div>
+					  	<div id="tdaydiv" class="form-group tm" hidden="true">
+					    	<label for="tday">天數</label>
+					    	<input type="number" class="form-control" id="tday" placeholder="幾天內的資料？">
+					  	</div>
+					  	<div id="rangediv" class="tm" hidden="true">
+						  	<div id="rangediv" class="form-group">
+						    	<label for="range">開始</label>
+						    	<input type="date" class="form-control" id="startdate"><br>
+						    	<input type="time" class="form-control" id="starttime">
+						  	</div>
+						  	<div id="rangediv" class="form-group">
+						    	<label for="range">結束</label>
+						    	<input type="date" class="form-control" id="enddate"><br>
+						    	<input type="time" class="form-control" id="endtime"><br>
+						  	</div>
+						  </div>
+					  	<button type="submit" class="btn btn-default">送出</button>
+					</form>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+	<div class="modal fade" id="ErrorModal" tabindex="-1" role="dialog" aria-labelledby="ErrorModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	        		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        		<h4 class="modal-title" id="ErrorModalLabel">糟糕，似乎連不上ThingSpeak</h4>
+	      		</div>
+	      		<div class="modal-body">
+	      			<p>請檢查你的網路狀態或稍後在試</p>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+</body>
+</html>

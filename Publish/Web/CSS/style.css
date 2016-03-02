@@ -1,0 +1,48 @@
+*{
+	font-family: "Microsoft JhengHei";
+}
+
+.nav-pills > li.active > a {
+    background-color: #5cb85c;
+}
+.nav-pills > li.active > a:hover {
+    background-color: #5cb85c;
+}
+.nav a {
+	color: #5cb85c;
+}
+.center{
+	border: 1px solid #cccccc;
+}
+.inline{
+	display: inline;
+}
+#infoBul{
+	width: 720px !important;
+	height: 440px !important;
+	padding: 16px;
+	overflow: visible;
+   	background-color: #FFF;
+   	/*border: 3px solid rgba(72, 181, 233, 0.3);*/
+   	border-radius: 10px;
+}
+#map, #picbardiv{
+	border-radius: 20px;
+}
+.his-field{
+	margin: 20px;
+	padding: 20px;
+	border: 1px solid rgba(72, 181, 233, 0.3);
+	border-radius: 20px;
+}
+.vertical-center {
+  min-height: 80%;  
+  display: flex;
+  align-items: center;
+}
+.infoconsole{
+	font-size: 16px;
+}
+#map{
+	height: 85vh;
+}
