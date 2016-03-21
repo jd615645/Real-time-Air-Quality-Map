@@ -36,6 +36,14 @@ node.js使用到的模板有
 * [InfoBubble.js](http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/examples/example.html/)
 * [ThingSpeak APIs](https://thingspeak.com/)
 
+環境安裝過程
+curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo npm install express --save -g
+sudo npm install file-system -g
+sudo npm install http -g
+sudo npm install query-string -g
+
 運作簡介
 ------
 FetchServer.js 會依據所登錄的站點類別，前去撈取最新一筆的資料，並整理放置於網頁提供範圍的目錄下(預設為/Web/Data/)<br/>
