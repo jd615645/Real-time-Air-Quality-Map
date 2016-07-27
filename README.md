@@ -37,12 +37,14 @@ node.js使用到的模板有
 * [ThingSpeak APIs](https://thingspeak.com/)
 
 環境安裝過程
+```
 curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo npm install express --save -g
 sudo npm install file-system -g
 sudo npm install http -g
 sudo npm install query-string -g
+```
 
 運作簡介
 ------
